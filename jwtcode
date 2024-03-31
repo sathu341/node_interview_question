@@ -1,0 +1,75 @@
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+
+const app = express();
+
+// Secret key for signing JWT
+const secretKey = 'yourSecretKey';
+
+// Middleware to generate JWT token and set it as cookie
+function generateToken(req, res, next) {
+  // Sample user data
+  const userData = {
+    username: 'exampleuser',
+    role: 'admin'
+  };
+
+  // Generate JWT token
+  const token = jwt.sign(userData, secretKey, { expiresIn: '1h' });
+
+  // Set token as cookie
+  res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); // Cookie expires in 1 hour (3600000 milliseconds)
+  next();
+}
+
+// Middleware to validate JWT token from cookie
+function validateToken(req, res, next) {
+  // Get token from cookie
+  const token = req.cookies.token;
+
+  // Check if token exists
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized: Missing token' });
+  }
+
+  // Verify token
+  jwt.verify(token, secretKey, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ message: 'Forbidden: Invalid token' });
+    }
+
+    // If token is valid, attach decoded data to request object
+    req.userData = decoded;
+    next();
+  });
+}
+
+// Use cookie-parser middleware
+app.use(cookieParser());
+
+// Routes
+app.get('/', (req, res) => {
+  res.send('Home Page');
+});
+
+app.get('/secure', validateToken, (req, res) => {
+  res.send('Secure Page');
+});
+
+// Login route to generate token and set cookie
+app.get('/login', generateToken, (req, res) => {
+  res.send('Token generated and set as cookie');
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
+// Start server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
