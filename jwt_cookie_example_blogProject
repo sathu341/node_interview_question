@@ -1,0 +1,56 @@
+step1:npm i cookie-parser 
+step2:npm i jsonwebtoken
+step3:
+      create a secertkey in .env file 
+      create a folder autorization
+       create a file auth.js
+       create code 
+           const  JWT=require('jsonwebtoken')
+           require('dotenv').config()
+            
+            function  generateToken(userdata){
+                  const token=JWT.sign(userdata,process.env.secertkey,{expiresIn:'1h'})
+                  console.log("generateToken")
+                  return token
+              }
+           module.exports={ generateToken}
+step4:
+      #login page code 
+      open->control folder->home.js:
+                 #you have to import  auth file 
+              const {generateToken}=require('../authorization/auth')
+              const loginaction=async(req,res)=>{
+                   try{
+                      const {email,password}=req.body;
+                      const result=await blogModel.find({'email':email});
+                           if(result.length>0){
+                                const userdata={'userid':result[0]._id,'username':result[0].fullname}
+                                const token=generateToken(userdata) //toekn generater
+                                const passw_db=result[0].password;
+                        
+                
+                                  bcrypt.compare(password,passw_db,function(err,response){
+                                      if(err) console.log(err);
+                                         if(response){
+                                              res.cookie('token',token,{maxAge:36000}).render('userpage',{'userid':result[0]._id,'username':result[0].fullname})
+                                                     }
+                                                     else{
+                                                            res.render('login',{'msg':'invalid password'})
+                                                               }
+                                                         })
+                                                  }
+                                           else{
+                                  res.render('login',{'msg':'invalid email'})
+                                }
+                     } //try block
+                       catch(error){ 
+                             res.send(error)
+                            }
+                          
+                      }
+step5:
+   create router: 
+          open->route->homerouter->
+               homerouter.route("/loginaction").post(loginaction)
+              
+          
