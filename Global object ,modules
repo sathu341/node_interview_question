@@ -1,0 +1,129 @@
+Global objects in Node.js are built-in objects. The Node.js runtime is made up of a number of core modules. To incorporate the functionality of any of the core modules such as fs module, or http module (or any external module installed from npm – such as express module), you need to load the same with require() function. However, some modules, functions, classes, variables etc. can be used directly in the JavaScript code, without loading them with require() functions. They are called Global objects. Let us take a look at the global classes, variables and functions in Node.js
+
+Buffer class
+Buffer class is a global class that can be accessed in an application without importing the buffer module. An object of buffer class stores raw data similar to an array of integers but corresponds to a raw memory allocation outside the V8 heap.
+
+You can create an uninitiated Buffer of 10 octets −
+
+var buf = new Buffer(10);
+A buffer object can also be created from a given array −
+
+var buf = new Buffer([10, 20, 30, 40, 50]);
+or from a given string −
+
+var buf = new Buffer("Simply Easy Learning", "utf-8");
+You can perform different operations with a buffer such as read/write data, convert a buffer to JSON, concatenation of buffers etc.
+
+Console class
+A Console class with methods such as console.log(), console.error(), and console.warn() that can be used to write to any Node.js stream. The global console can be used without calling require('node:console').
+
+The following REPL session shows the function of the global console object
+
+> console.log("Hello World");
+Hello World
+undefined
+> console.error("Some error occurred");
+Some error occurred
+undefined
+> console.warn("This is a warning message!");
+This is a warning message!
+undefined
+Process object
+The process object is a global object, although it is defined in process module. It is an instance of EventEmitter class. The process object provides information on current process. With the help of a number of methods and properties associated with this object, it is possible to control the current process.
+
+One of the properties of Process object is argv array. It stores the command-line arguments passed to the node executable.
+
+The 0th element in the array is the node executable, first element is the javascript file, followed by the arguments passed.
+
+Save the following script as hello.js and run it from command line, pass a string argument to it from command line.
+
+const args = process.argv;
+
+console.log(args); 
+
+const name = args[2];
+
+console.log("Hello,", name);
+In the terminal, enter
+
+PS D:\nodejs> node hello.js TutorialsPoint
+[ 'C:\\nodejs\\node.exe', 'D:\\nodejs\\a.js', 'TutorialsPoint' ]
+Hello, TutorialsPoint
+The process.argv0 property stores a read-only copy of the original value of argv[0] passed when Node.js starts.
+
+The env property of Process object stores the environment variables. You can set environment variables from the command line. Assign the values to one or more variables before the node executable name.
+
+USER_ID=101 USER_NAME=admin node app.js
+Inside the script, the environment variables are available as the properties of the process.env object
+
+process.env.USER_ID; // "101"
+process.env.USER_NAME; // "admin"
+Some useful information about the current process is stored in the properties of process object, as shown in the following example.
+
+Example
+console.log('Process Architecture:'+process.arch);  
+console.log('Current working directory:'+ process.cwd());
+console.log('Process PID: '+process.pid);  
+console.log('Process Platform: '+process.platform);  
+console.log('Process Version: '+process.version);  
+Output
+Process Architecture:x64
+Current working directory:D:\nodejs
+Process PID: 11060
+Process Platform: win32
+Process Version: v20.9.0
+Global timer functions
+The timer module of Node.js defines functions for scheduling callbacks. They can be used as global functions (without importing the module).
+
+The setTimeout() function is used to run a callback after a specified duration in milliseconds.
+
+function printHello() {
+   console.log( "Hello, World!");
+}
+
+// Now call above function after 2 seconds
+setTimeout(printHello, 2000);
+The clearTimeout() function is used to stop a timer that was previously created with setTimeout().
+
+The setInterval() function is used to run a callback repeatedly after a specified duration in milliseconds.
+
+function printHello() {
+   console.log( "Hello, World!");
+}
+
+// Now call above function after 2 seconds
+setInterval(printHello, 2000);
+Global variables
+__filename
+The __filename represents the filename of the code being executed. This is the resolved absolute path of this code file. For a main program, this is not necessarily the same filename used in the command line. The value inside a module is the path to that module file.
+
+Example
+Create a js file named main.js with the following code −
+
+// Let's try to print the value of __filename
+console.log( __filename );
+Now run the main.js to see the result −
+
+D:\nodejs\main.js
+__dirname
+The __dirname represents the name of the directory that the currently executing script resides in.
+
+Example
+Create a js file named main.js with the following code −
+
+// Let's try to print the value of __dirname
+console.log( __dirname );
+Now run the main.js to see the result −
+
+D:\nodejs
+Note that require() function, which imports a given module into the Node.js runtime, is also a global function.
+
+Global Objects
+The following table provides a list of other objects which we use frequently in our applications. For a more detail, you can refer to the official documentation.
+
+Sr.No.	Module Name & Description
+1	Console
+Used to print information on stdout and stderr.
+
+2	Process
+Used to get information on current process. Provides multiple events related to process activities.
