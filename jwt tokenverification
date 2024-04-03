@@ -1,0 +1,27 @@
+step1: auth.js->
+          function tokenverification(req,res,next){
+            console.log("verifide")
+            const token=req.cookies['token'] //client side token
+            JWT.verify(token,process.env.secertkey,(err,decode)=>{
+                  if(err){
+                       res.redirect("/") //redirect to client page
+                     }
+                  else{
+                      return next() //move to  next function 
+                             }
+            }) 
+
+step2: create ejs file  and named as addpost 
+          <h1> AddPost</h1>
+step3: create route
+          control->home.js
+                   const addpost=(req,res)=>{
+                             res.render("addpost")
+                             }
+          router->home.js
+                  const {tokenverification,generateToken}=require('../autherization/auth')
+                  homerouter.route("/addpost").get(toeknverification,addpost)
+
+
+    
+}
