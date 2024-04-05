@@ -1,0 +1,73 @@
+//using http and fs file write
+const fs=require('fs');
+const http=require('http')
+
+http.createServer(function(req,res){
+   fs.writeFile('log.txt',"welcome to fs module",function(err){
+    if(err)console.log(err);
+    res.writeHead(200,{'Content-Type':'text/html'})
+    res.write("Data writed")
+    res.end()
+
+   })
+})
+.listen(9000,()=>{
+    console.log("server running http://localhost:9000/")
+})
+
+//using http and fs/promise
+const http=require('http')
+const {readFile}=require("fs/promises")
+http.createServer(function(req,res){
+async function readFilePromise(){
+     
+    try{
+      const result=await readFile('./test.txt')
+      res.writeHead(200,{'Content-type':'text/html'})
+      res.write(result.toString())
+      res.end()
+     
+    }
+    catch(error){
+        console.log(`Error in file handling:${error}`)
+    }
+
+}
+readFilePromise()
+}).listen(9000,()=>{
+    console.log("server running http://localhost:9000/")
+})
+
+//using express file  read and write
+const express=require('express') //npm i express
+const fs=require('fs')
+
+const app=express()
+app.get("/fread",function (req,res){
+    fs.readFile('log.txt',function(err,data){
+        if(err)console.log(err)
+        console.log(data.toLocaleString())
+      const  content=data.toLocaleString();
+        res.send(content)
+    })
+})
+app.get('/wfile',function (req,res){
+    fs.writeFile('log.txt',"jame login 23.8.45",function(err){
+        if(err) console.log(err)
+        res.send("successfully")
+    })
+})
+app.get('/apfile',function (req,res){
+    fs.appendFile('log.txt',"Sara login 12.8.45\n",function(err){
+        if(err) console.log(err)
+        res.send("successfully")
+    })
+})
+
+
+
+app.listen(8081,()=>{
+    console.log("server running http://localhost:8081/")
+})
+
+
