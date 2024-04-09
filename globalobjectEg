@@ -1,0 +1,14 @@
+
+// const display=function(){
+//     console.log("display element")
+// }
+// global.setTimeout(display,2000)
+function clockDisplay(){
+    let dt=new Date()
+    let time=dt.getHours()+":"+dt.getMinutes()+":"+dt.getSeconds()
+    console.log(time)
+}
+
+
+global.setInterval(clockDisplay,1000)
+
