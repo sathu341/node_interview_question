@@ -1,0 +1,41 @@
+In Node.js, the concept of the global object and modules plays a significant role in structuring and organizing JavaScript code.
+
+Global Object:
+The global object in Node.js is similar to the window object in browsers, but it provides access to Node.js-specific functionalities and global variables. This global object is called global.
+
+Some common properties and methods of the global object in Node.js include:
+
+global.console: Provides methods for writing to the console (e.g., console.log()).
+global.process: Provides information about the currently running Node.js process and methods to control it.
+global.setTimeout, global.clearTimeout, global.setInterval, global.clearInterval: Functions for timing operations.
+global.require(): Used to import modules.
+Modules:
+Node.js uses the CommonJS module system to organize code into reusable modules. Each file in Node.js is treated as a separate module. Modules encapsulate code, variables, and functions, making it easier to manage and maintain large codebases.
+
+Key concepts related to modules in Node.js include:
+
+require(): The require() function is used to import modules in Node.js. You can import both built-in modules and modules created by yourself or third-party developers.
+module.exports and exports: These are used to define the interface of a module and export variables, functions, or objects for use in other modules.
+module: This is a reference to the current module. It provides information about the current module such as its filename, exports, and whether it is the main module or not.
+File-based module resolution: Node.js follows a specific algorithm to resolve module paths. It looks for modules in the node_modules folder, core modules, and local modules relative to the current file.
+Example:
+
+javascript
+Copy code
+// math.js
+function add(a, b) {
+    return a + b;
+}
+
+function subtract(a, b) {
+    return a - b;
+}
+
+module.exports = { add, subtract };
+javascript
+Copy code
+// app.js
+const { add, subtract } = require('./math');
+
+console.log(add(5, 3)); // Outputs: 8
+console.log(subtract(5, 3)); // Outputs: 2
