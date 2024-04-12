@@ -1,0 +1,53 @@
+the EJS (Embedded JavaScript) template engine in a Node.js application. EJS is a simple templating language that lets you generate HTML markup with plain JavaScript.
+
+Here's a basic example of how to set up and use EJS in a Node.js application:
+
+Install EJS:
+First, you need to install EJS as a dependency in your Node.js project. You can do this using npm or yarn:
+bash
+Copy code
+npm install ejs
+Set Up Express Application:
+Assuming you're using Express.js for your Node.js web application, you'll need to set up an Express application and configure it to use EJS as the view engine.
+javascript
+Copy code
+const express = require('express');
+const app = express();
+
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+
+// Set the directory for views (optional, defaults to 'views' directory in root)
+app.set('views', __dirname + '/views');
+
+// Define routes
+app.get('/', (req, res) => {
+    res.render('index', { title: 'Hello World!' });
+});
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+Create EJS Views:
+In your project directory, create a folder named views (or whatever you specified in the Express configuration). Inside this folder, create your EJS template files with a .ejs extension.
+Example views/index.ejs:
+
+html
+Copy code
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+    <h1><%= title %></h1>
+    <p>Welcome to my EJS-powered website!</p>
+</body>
+</html>
+Render EJS Views:
+In your Express route handlers, use res.render() to render EJS views. You can pass data to the view by providing an object as the second argument to res.render(). This object's properties become variables accessible within the EJS template.
+That's it! With this setup, your Node.js application should now be able to render EJS templates dynamically. You can create more EJS views and render them in different routes as needed.
