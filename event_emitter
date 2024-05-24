@@ -1,0 +1,12 @@
+const {EventEmitter}=require("events")
+const event_emitter=new EventEmitter() 
+
+event_emitter.on("click",()=>{
+    console.log("click event executed")
+})
+event_emitter.on("message",()=>{
+    console.log("message")
+    event_emitter.emit("click")
+})
+
+event_emitter.emit("message")
