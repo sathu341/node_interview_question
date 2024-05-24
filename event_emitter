@@ -1,12 +1,16 @@
 const {EventEmitter}=require("events")
-const event_emitter=new EventEmitter() 
+const emitter=new EventEmitter()
 
-event_emitter.on("click",()=>{
-    console.log("click event executed")
-})
-event_emitter.on("message",()=>{
-    console.log("message")
-    event_emitter.emit("click")
-})
+const handler=()=>{
+    console.log("click event handler")
+}
 
-event_emitter.emit("message")
+emitter.on('click',handler)
+
+
+//second event 
+emitter.on('message',function(){
+   console.log("message event is called")
+   emitter.emit("click")
+})
+emitter.emit("message")
