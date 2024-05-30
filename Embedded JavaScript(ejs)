@@ -1,16 +1,18 @@
-the EJS (Embedded JavaScript) template engine in a Node.js application. EJS is a simple templating language that lets you generate HTML markup with plain JavaScript.
+the EJS (Embedded JavaScript) template engine in a Node.js application.
+EJS is a simple templating language that lets you generate HTML markup with plain JavaScript.
 
 Here's a basic example of how to set up and use EJS in a Node.js application:
 
 Install EJS:
 First, you need to install EJS as a dependency in your Node.js project. You can do this using npm or yarn:
 bash
-Copy code
+
+
 npm install ejs
 Set Up Express Application:
-Assuming you're using Express.js for your Node.js web application, you'll need to set up an Express application and configure it to use EJS as the view engine.
-javascript
-Copy code
+Assuming you're using Express.js for your Node.js web application, you'll need to set up an Express application 
+and configure it to use EJS as the view engine.
+
 const express = require('express');
 const app = express();
 
